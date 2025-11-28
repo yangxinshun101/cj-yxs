@@ -14,9 +14,9 @@ public class WeChatMesFactory implements InitializingBean {
     @Resource
     private List<WeChatMesHandler> weChatMesHandlers;
 
-    Map<WeChatCallBackEnums,WeChatMesHandler> weChatMesHandlerMap = new HashMap<>();
+    Map<WeChatCallBackEnums, WeChatMesHandler> weChatMesHandlerMap = new HashMap<>();
 
-    public WeChatMesHandler getWeChatMesHandler(String mesType){
+    public WeChatMesHandler getWeChatMesHandler(String mesType) {
         WeChatCallBackEnums weChatCallBackEnums = WeChatCallBackEnums.geBytMsgType(mesType);
         return weChatMesHandlerMap.get(weChatCallBackEnums);
     }
@@ -24,8 +24,8 @@ public class WeChatMesFactory implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         for (WeChatMesHandler weChatMesHandler : weChatMesHandlers) {
-            weChatMesHandlerMap.put(weChatMesHandler.getMesType(),weChatMesHandler);
-            }
+            weChatMesHandlerMap.put(weChatMesHandler.getMesType(), weChatMesHandler);
         }
     }
 }
+
