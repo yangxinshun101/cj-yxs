@@ -1,0 +1,20 @@
+package com.yxs.subject.domain.convert;
+
+import com.yxs.subject.domain.entity.SubjectCategoryBO;
+import com.yxs.subject.infra.basic.entity.SubjectCategory;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
+import java.util.List;
+
+@Mapper
+public interface SubjectCategoryBOConvert {
+    SubjectCategoryBOConvert INSTANCE = Mappers.getMapper(SubjectCategoryBOConvert.class);
+
+    SubjectCategory convertBOToCategory(SubjectCategoryBO subjectCategoryBO);
+    
+    SubjectCategoryBO convertCategoryToBO(SubjectCategory subjectCategory);
+
+
+    List<SubjectCategoryBO> convertCategoryListToBOList(List<SubjectCategory> subjectCategoryList);
+}

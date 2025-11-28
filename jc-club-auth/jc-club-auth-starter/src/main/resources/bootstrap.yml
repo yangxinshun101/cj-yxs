@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: jc-club-auth
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        server-addr: 122.152.204.49:8848
+        namespace:
+        gourp: DEFAULT_GROUP
+        prefix: ${spring.application.name}
+        file-extension: yaml
+      discovery:
+        enabled: true
+        server-addr: 122.152.204.49:8848

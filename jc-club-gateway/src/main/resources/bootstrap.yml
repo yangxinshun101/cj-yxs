@@ -1,0 +1,17 @@
+#需要先构建一个注册到nacos的名字
+spring:
+  application:
+    name: jc-club-gateway
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        server-addr: 122.152.204.49:8848
+        namespace:
+        prefix: ${spring.application.name}
+        group: DEFAULT_GROUP
+        file-extension: yaml
+      discovery:
+        enabled: true
+        server-addr: 122.152.204.49:8848

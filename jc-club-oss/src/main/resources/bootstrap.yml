@@ -1,0 +1,21 @@
+spring:
+  application:
+    #添加服务名称，用于后期nacos的注册与发现
+    name: jc-club-oss
+#   指定当前激活的配置文件
+  profiles:
+    # 指定测试环境
+    active: dev
+  cloud:
+    nacos:
+      config:
+        server-addr: 122.152.204.49:8848
+        # 这个是指定配置文件的前缀
+        prefix: ${spring.application.name}
+        namespace:
+        group: DEFAULT_GROUP
+        # 这个是文件后缀
+        file-extension: yaml
+      discovery:
+        enabled: true
+        server-addr: 122.152.204.49:8848
