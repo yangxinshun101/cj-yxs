@@ -1,6 +1,7 @@
 package com.yxs.oss.adapter;
 
 import com.yxs.oss.entity.FileInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.util.List;
@@ -11,7 +12,7 @@ public interface StorageAdapter {
 
     List<FileInfo> getFilesInBucket(String bucket);
 
-    void uploadFile(String bucket, String objectName, InputStream inputStream);
+    void uploadFile(MultipartFile uploadFile, String bucket, String objectName);
 
     void createBucket(String bucket);
 
@@ -22,4 +23,5 @@ public interface StorageAdapter {
     void deleteBucket(String bucket);
 
     String getFileUrl(String bucket, String objectName);
+
 }

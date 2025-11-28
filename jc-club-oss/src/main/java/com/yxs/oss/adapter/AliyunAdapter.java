@@ -1,6 +1,7 @@
 package com.yxs.oss.adapter;
 
 import com.yxs.oss.entity.FileInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.util.Collections;
@@ -18,7 +19,7 @@ public class AliyunAdapter implements StorageAdapter{
     }
 
     @Override
-    public void uploadFile(String bucket, String objectName, InputStream inputStream) {
+    public void uploadFile(MultipartFile uploadFile, String bucket, String objectName) {
 
     }
 

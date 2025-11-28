@@ -4,14 +4,21 @@ import com.yxs.oss.adapter.AliyunAdapter;
 import com.yxs.oss.adapter.MinioAdapter;
 import com.yxs.oss.adapter.StorageAdapter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@RefreshScope
 public class AdapterConfig {
 
     @Value("${oss.adapter.type}")
     private String adapterType;
+
+
+    public String getAdapterType() {
+        return adapterType;
+    }
 
     @Bean
     public StorageAdapter storageAdapter() {
