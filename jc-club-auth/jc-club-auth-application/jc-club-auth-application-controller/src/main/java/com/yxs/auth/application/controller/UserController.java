@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/user/")
-public class LoginController {
+public class UserController {
 
     // 测试登录  ---- http://localhost:8081/acc/doLogin?name=zhang&pwd=123456
     @RequestMapping("doLogin")
