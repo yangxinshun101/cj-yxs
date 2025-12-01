@@ -53,4 +53,5 @@ public interface AuthRoleService {
      */
     boolean deleteById(Long id);
 
+    AuthRole queryByCondition(AuthRole authRole);
 }

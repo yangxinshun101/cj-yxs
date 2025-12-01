@@ -1,4 +1,4 @@
-package com.yxs.auth.infra.basic.dao;
+package com.yxs.auth.infra.basic.mapper;
 
 import com.yxs.auth.infra.basic.entity.AuthUser;
 import org.apache.ibatis.annotations.Param;
@@ -79,5 +79,6 @@ public interface AuthUserDao {
      */
     int deleteById(Long id);
 
+    List<AuthUser> queryByCondition(AuthUser authUser);
 }
 

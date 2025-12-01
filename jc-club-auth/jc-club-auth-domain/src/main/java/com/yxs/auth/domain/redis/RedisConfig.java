@@ -1,4 +1,4 @@
-package domain.redis;
+package com.yxs.auth.domain.redis;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

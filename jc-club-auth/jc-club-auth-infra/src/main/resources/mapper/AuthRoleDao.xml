@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yxs.auth.infra.basic.dao.AuthRoleDao">
+<mapper namespace="com.yxs.auth.infra.basic.mapper.AuthRoleDao">
 
     <resultMap type="com.yxs.auth.infra.basic.entity.AuthRole" id="AuthRoleMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
@@ -58,6 +58,37 @@ id, role_name, role_key, created_by, created_time, update_by, update_time, is_de
     <!--统计总行数-->
     <select id="count" resultType="java.lang.Long">
         select count(1)
+        from auth_role
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="roleName != null and roleName != ''">
+                and role_name = #{roleName}
+            </if>
+            <if test="roleKey != null and roleKey != ''">
+                and role_key = #{roleKey}
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                and created_by = #{createdBy}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="isDeleted != null">
+                and is_deleted = #{isDeleted}
+            </if>
+        </where>
+    </select>
+    <select id="queryByCondition" resultType="com.yxs.auth.infra.basic.entity.AuthRole">
+        select
+        id, role_name, role_key, created_by, created_time, update_by, update_time, is_deleted
         from auth_role
         <where>
             <if test="id != null">

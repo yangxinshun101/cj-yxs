@@ -1,7 +1,7 @@
 package com.yxs.auth.infra.basic.service.impl;
 
 import com.yxs.auth.infra.basic.entity.AuthUserRole;
-import com.yxs.auth.infra.basic.dao.AuthUserRoleDao;
+import com.yxs.auth.infra.basic.mapper.AuthUserRoleDao;
 import com.yxs.auth.infra.basic.service.AuthUserRoleService;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;

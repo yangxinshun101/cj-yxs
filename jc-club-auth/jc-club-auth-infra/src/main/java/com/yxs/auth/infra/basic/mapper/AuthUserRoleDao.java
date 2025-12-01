@@ -1,4 +1,4 @@
-package com.yxs.auth.infra.basic.dao;
+package com.yxs.auth.infra.basic.mapper;
 
 import com.yxs.auth.infra.basic.entity.AuthUserRole;
 import org.apache.ibatis.annotations.Param;

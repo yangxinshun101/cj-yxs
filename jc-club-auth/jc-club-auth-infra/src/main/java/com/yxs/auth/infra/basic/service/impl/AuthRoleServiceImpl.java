@@ -1,7 +1,7 @@
 package com.yxs.auth.infra.basic.service.impl;
 
 import com.yxs.auth.infra.basic.entity.AuthRole;
-import com.yxs.auth.infra.basic.dao.AuthRoleDao;
+import com.yxs.auth.infra.basic.mapper.AuthRoleDao;
 import com.yxs.auth.infra.basic.service.AuthRoleService;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -78,5 +78,10 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     @Override
     public boolean deleteById(Long id) {
         return this.authRoleDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public AuthRole queryByCondition(AuthRole authRole) {
+        return authRoleDao.queryByCondition(authRole);
     }
 }

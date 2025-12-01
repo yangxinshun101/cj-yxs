@@ -1,4 +1,4 @@
-package domain.redis;
+package com.yxs.auth.domain.redis;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;

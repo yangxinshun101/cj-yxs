@@ -4,6 +4,8 @@ import com.yxs.auth.infra.basic.entity.AuthRolePermission;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.List;
+
 /**
  * 角色权限关联表(AuthRolePermission)表服务接口
  *
@@ -53,4 +55,5 @@ public interface AuthRolePermissionService {
      */
     boolean deleteById(Long id);
 
+    List<AuthRolePermission> queryByCondition(AuthRolePermission authRolePermission);
 }

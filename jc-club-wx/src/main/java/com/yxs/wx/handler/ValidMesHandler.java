@@ -1,6 +1,7 @@
 package com.yxs.wx.handler;
 
 import com.yxs.wx.redis.RedisUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+@Component
 public class ValidMesHandler implements WeChatMesHandler {
 
     @Resource
@@ -33,14 +35,15 @@ public class ValidMesHandler implements WeChatMesHandler {
         }
 
         Random random = new Random();
-        String code = String.valueOf(random.nextInt(1000000));
+        String code = String.valueOf(random.nextInt(1000));
 
         String openId = messageMap.get("FromUserName");
-        String key = redisUtils.buildKey(LOGIN_PREFIX, openId);
+        String toUserName = messageMap.get("ToUserName");
+        String key = redisUtils.buildKey(LOGIN_PREFIX, code);
         redisUtils.setNx(key, openId, 5L, TimeUnit.MINUTES);
         String message = "<xml>\n" +
                 " <ToUserName><![CDATA[" + openId + "]]></ToUserName>\n" +
-                " <FromUserName><![CDATA[" + messageMap.get("toUserName") + "]]></FromUserName>\n" +
+                " <FromUserName><![CDATA[" + toUserName + "]]></FromUserName>\n" +
                 " <CreateTime>" + LocalDateTime.now() + "</CreateTime>\n" +
                 " <MsgType><![CDATA[text]]></MsgType>\n" +
                 " <Content><![CDATA[你好，你的验证码是" + code + "，该验证码5分钟内有效！]]></Content>\n" +

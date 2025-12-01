@@ -59,7 +59,7 @@ public class CallBackController {
         String event = requstMessageMap.get("Event") == null ? "" : requstMessageMap.get("Event");
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(msgType);
-        if (StringUtils.isEmpty(event)){
+        if (!StringUtils.isEmpty(event)){
             stringBuilder.append(".");
             stringBuilder.append(event);
         }

@@ -1,7 +1,7 @@
 package com.yxs.auth.infra.basic.service.impl;
 
 import com.yxs.auth.infra.basic.entity.AuthRolePermission;
-import com.yxs.auth.infra.basic.dao.AuthRolePermissionDao;
+import com.yxs.auth.infra.basic.mapper.AuthRolePermissionDao;
 import com.yxs.auth.infra.basic.service.AuthRolePermissionService;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 角色权限关联表(AuthRolePermission)表服务实现类
@@ -78,5 +79,10 @@ public class AuthRolePermissionServiceImpl implements AuthRolePermissionService 
     @Override
     public boolean deleteById(Long id) {
         return this.authRolePermissionDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public List<AuthRolePermission> queryByCondition(AuthRolePermission authRolePermission) {
+        return authRolePermissionDao.queryByCondition(authRolePermission);
     }
 }
