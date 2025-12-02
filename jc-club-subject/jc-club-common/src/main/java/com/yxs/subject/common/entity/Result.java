@@ -8,10 +8,12 @@ public class Result<T> {
 
     private Integer code;
     private String message;
+    private Boolean success;
     private T data;
 
     public static Result success() {
         Result result = new Result();
+        result.setSuccess(true);
         result.setCode(ResultCodeEnum.SUCCESS.getCode());
         result.setMessage(ResultCodeEnum.SUCCESS.getMessage());
         return result;
@@ -19,6 +21,7 @@ public class Result<T> {
 
     public static <T> Result success(T data) {
         Result result = new Result();
+        result.setSuccess(true);
         result.setCode(ResultCodeEnum.SUCCESS.getCode());
         result.setMessage(ResultCodeEnum.SUCCESS.getMessage());
         result.setData(data);
@@ -28,6 +31,7 @@ public class Result<T> {
 
     public static Result fail() {
         Result result = new Result();
+        result.setSuccess(false);
         result.setCode(ResultCodeEnum.FAIL.getCode());
         result.setMessage(ResultCodeEnum.FAIL.getMessage());
         return result;
@@ -35,6 +39,7 @@ public class Result<T> {
 
     public static <T> Result fail(T data) {
         Result result = new Result();
+        result.setSuccess(false);
         result.setCode(ResultCodeEnum.FAIL.getCode());
         result.setMessage(ResultCodeEnum.FAIL.getMessage());
         result.setData(data);

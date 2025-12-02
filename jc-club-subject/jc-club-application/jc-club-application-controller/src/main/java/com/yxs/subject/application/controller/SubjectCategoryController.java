@@ -3,7 +3,9 @@ package com.yxs.subject.application.controller;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Preconditions;
 import com.yxs.subject.application.convert.SubjectCategoryDTOConvert;
+import com.yxs.subject.application.convert.SubjectLabelDTOConvert;
 import com.yxs.subject.application.dto.SubjectCategoryDTO;
+import com.yxs.subject.application.dto.SubjectLabelDTO;
 import com.yxs.subject.common.entity.Result;
 import com.yxs.subject.domain.entity.SubjectCategoryBO;
 import com.yxs.subject.domain.service.SubjectCategoryDomainService;
@@ -12,6 +14,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -26,7 +30,7 @@ public class SubjectCategoryController {
      * 新增分类
      */
     @PostMapping("/add")
-    public Result add (@RequestBody SubjectCategoryDTO subjectCategoryDTO) {
+    public Result add(@RequestBody SubjectCategoryDTO subjectCategoryDTO) {
 
         try {
             //打印日志，记录传入参数信息
@@ -46,7 +50,7 @@ public class SubjectCategoryController {
             subjectCategoryDomainService.add(subjectCategoryBO);
 
             return Result.success();
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.error("SubjectController.add.error:{}", e.getMessage(), e);
             return Result.fail("新增分类失败");
         }
@@ -55,18 +59,19 @@ public class SubjectCategoryController {
 
     /**
      * 查询岗位大类，根据岗位parentId=0去查询岗位大类
+     *
      * @param subjectCategoryDTO
      * @return
      */
     @PostMapping("/queryPrimaryCategory")
     public Result<SubjectCategoryDTO> queryPrimaryCategory(@RequestBody SubjectCategoryDTO subjectCategoryDTO) {
-        try{
+        try {
             if (log.isInfoEnabled()) {
                 log.info("SubjectController.queryPrimaryCategory.subjectCategoryDTO:{}", subjectCategoryDTO);
             }
 
             //对传入数据的parentId进行判空
-            Preconditions.checkNotNull(subjectCategoryDTO.getParentId(), "父级分类id不能为空");
+            Preconditions.checkNotNull(subjectCategoryDTO.getCategoryType(), "分类id不能为空");
 
             //调用convert类进行转换，将DTO转换为BO
             SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConvert.INSTANCE.
@@ -80,7 +85,7 @@ public class SubjectCategoryController {
                     convertCategoryBOListToDTOList(subjectCategoryBOList);
 
             return Result.success(subjectCategoryDTOList);
-        } catch(Exception e){
+        } catch (Exception e) {
             log.error("subjectController.queryPrimaryCategory.error:{}", e.getMessage(), e);
 
             return Result.fail("查询主标题失败");
@@ -89,11 +94,12 @@ public class SubjectCategoryController {
 
     /**
      * 查询子分类，根据岗位parentId去查询子分类
+     *
      * @param subjectCategoryDTO
      * @return
      */
     @PostMapping("/queryChildCategory")
-    public Result<SubjectCategoryDTO> queryChildCategory(@RequestBody SubjectCategoryDTO subjectCategoryDTO){
+    public Result<SubjectCategoryDTO> queryChildCategory(@RequestBody SubjectCategoryDTO subjectCategoryDTO) {
         try {
             if (log.isInfoEnabled()) {
                 log.info("SubjectController.queryChildCategory.subjectCategoryDTO:{}", subjectCategoryDTO);
@@ -114,7 +120,7 @@ public class SubjectCategoryController {
                     convertCategoryBOListToDTOList(subjectCategoryBOList);
 
             return Result.success(subjectCategoryDTOList);
-        } catch(Exception e){
+        } catch (Exception e) {
             log.error("subjectController.queryChildCategory.error:{}", e.getMessage(), e);
 
             return Result.fail("查询子标题失败");
@@ -123,11 +129,12 @@ public class SubjectCategoryController {
 
     /**
      * 更新分类信息
+     *
      * @param subjectCategoryDTO
      * @return
      */
     @PostMapping("/update")
-    public Result update (@RequestBody SubjectCategoryDTO subjectCategoryDTO) {
+    public Result update(@RequestBody SubjectCategoryDTO subjectCategoryDTO) {
         try {
             //打印日志，记录传入参数信息
             if (log.isInfoEnabled()) {
@@ -147,7 +154,7 @@ public class SubjectCategoryController {
             Boolean result = subjectCategoryDomainService.update(subjectCategoryBO);
 
             return Result.success(result.toString());
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.error("SubjectController.update.error:{}", e.getMessage(), e);
             return Result.fail("更新分类失败");
         }
@@ -155,11 +162,12 @@ public class SubjectCategoryController {
 
     /**
      * 根据ID删除分类信息
+     *
      * @param subjectCategoryDTO
      * @return
      */
     @PostMapping("/delete")
-    public Result delete (@RequestBody SubjectCategoryDTO subjectCategoryDTO) {
+    public Result delete(@RequestBody SubjectCategoryDTO subjectCategoryDTO) {
         try {
             //打印日志，记录传入参数信息
             if (log.isInfoEnabled()) {
@@ -176,12 +184,39 @@ public class SubjectCategoryController {
             Boolean result = subjectCategoryDomainService.delete(subjectCategoryBO);
 
             return Result.success(result.toString());
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.error("SubjectController.delete.error:{}", e.getMessage(), e);
             return Result.fail("删除分类失败");
         }
     }
 
+    @PostMapping("/queryCategoryAndLabel")
+    public Result<SubjectCategoryDTO> queryCategoryAndLabel (@RequestBody SubjectCategoryDTO subjectCategoryDTO){
+        try {
+            //当日志等级为info时打印日志
+            if (log.isInfoEnabled()){
+                log.info("SubjectController.queryCategoryAndLabel.subjectCategoryDTO:{}", JSON.toJSON(subjectCategoryDTO));
+            }
 
+            //根据传过来的分类ID查出所有的子类
+            SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConvert.INSTANCE.
+                    subjectCategoryDTOToBO(subjectCategoryDTO);
+            List<SubjectCategoryBO> subjectCategoryBOList = subjectCategoryDomainService.queryCategoryAndLabel(subjectCategoryBO);
+
+            List<SubjectCategoryDTO> dtoList = new ArrayList<>();
+            subjectCategoryBOList.forEach(bo -> {
+                SubjectCategoryDTO dto = SubjectCategoryDTOConvert.INSTANCE.convertBoToCategoryDTO(bo);
+                List<SubjectLabelDTO> labelDTOList = SubjectLabelDTOConvert.INSTANCE.convertBOToLabelDTOList(bo.getLabelBOList());
+                dto.setLabelDTOList(labelDTOList);
+                dtoList.add(dto);
+            });
+
+            return Result.success(dtoList);
+        }catch (Exception e){
+            log.error("SubjectController.queryCategoryAndLabel.error:{}", e.getMessage(), e);
+            return Result.fail("查询分类和标签失败");
+        }
+
+    }
 
 }

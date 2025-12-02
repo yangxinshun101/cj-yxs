@@ -7,4 +7,6 @@ public interface UserDomainService {
     SaTokenInfo doLogin(String validCode);
 
     Boolean register(AuthUserBO authUserBO);
+
+    AuthUserBO getUserInfo(AuthUserBO authUserBO);
 }

@@ -1,17 +1,26 @@
 package com.yxs.subject.domain.service.Impl;
 
+import com.alibaba.fastjson.JSON;
 import com.yxs.subject.common.enums.IsDeletedFlagEnum;
 import com.yxs.subject.domain.convert.SubjectCategoryBOConvert;
 import com.yxs.subject.domain.entity.SubjectCategoryBO;
+import com.yxs.subject.domain.entity.SubjectLabelBO;
 import com.yxs.subject.domain.service.SubjectCategoryDomainService;
 import com.yxs.subject.infra.basic.entity.SubjectCategory;
+import com.yxs.subject.infra.basic.entity.SubjectMapping;
+import com.yxs.subject.infra.basic.entity.SubjectLabel;
 import com.yxs.subject.infra.basic.service.SubjectCategoryService;
+import com.yxs.subject.infra.basic.service.SubjectLabelService;
+import com.yxs.subject.infra.basic.service.SubjectMappingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -20,6 +29,11 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
     @Resource
     private SubjectCategoryService subjectCategoryService;
 
+    @Resource
+    private SubjectMappingService subjectMappingService;
+
+    @Resource
+    private SubjectLabelService subjectLabelService;
     @Override
     public void add(SubjectCategoryBO subjectCategoryBO) {
         //打印日志，记录传入参数信息
@@ -94,5 +108,46 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
         int count = subjectCategoryService.update(subjectCategory);
 
         return count > 0;
+    }
+
+    @Override
+    public List<SubjectCategoryBO> queryCategoryAndLabel(SubjectCategoryBO subjectCategoryBO) {
+        //查询当前大类下所有分类
+        SubjectCategory subjectCategory = new SubjectCategory();
+        subjectCategory.setParentId(subjectCategoryBO.getId());
+        subjectCategory.setIsDeleted(IsDeletedFlagEnum.NOT_DELETED.getCode());
+        List<SubjectCategory> subjectCategoryList = subjectCategoryService.queryCategoryParentList(subjectCategory);
+        if (log.isInfoEnabled()) {
+            log.info("SubjectCategoryController.queryCategoryAndLabel.subjectCategoryList:{}",
+                    JSON.toJSONString(subjectCategoryList));
+        }
+        List<SubjectCategoryBO> categoryBOList = SubjectCategoryBOConvert.INSTANCE.convertCategoryListToBOList(subjectCategoryList);
+        //一次获取标签信息
+        categoryBOList.forEach(category -> {
+            SubjectMapping subjectMapping = new SubjectMapping();
+            subjectMapping.setCategoryId(category.getId());
+            List<SubjectMapping> mappingList = subjectMappingService.queryLabelId(subjectMapping);
+
+            if (log.isInfoEnabled()){
+                log.info("SubjectCategoryController.queryCategoryAndLabel.mappingList:{}",
+                        JSON.toJSONString(mappingList));
+            }
+            if (CollectionUtils.isEmpty(mappingList)) {
+                return;
+            }
+            List<Long> labelIdList = mappingList.stream().map(SubjectMapping::getLabelId).collect(Collectors.toList());
+            List<SubjectLabel> labelList = subjectLabelService.batchQueryById(labelIdList);
+            List<SubjectLabelBO> labelBOList = new LinkedList<>();
+            labelList.forEach(label -> {
+                SubjectLabelBO subjectLabelBO = new SubjectLabelBO();
+                subjectLabelBO.setId(label.getId());
+                subjectLabelBO.setLabelName(label.getLabelName());
+                subjectLabelBO.setCategoryId(label.getCategoryId());
+                subjectLabelBO.setSortNum(label.getSortNum());
+                labelBOList.add(subjectLabelBO);
+            });
+            category.setLabelBOList(labelBOList);
+        });
+        return categoryBOList;
     }
 }

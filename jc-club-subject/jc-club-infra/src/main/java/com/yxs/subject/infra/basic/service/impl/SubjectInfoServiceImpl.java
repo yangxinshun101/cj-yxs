@@ -73,6 +73,6 @@ public class SubjectInfoServiceImpl implements SubjectInfoService {
 
     @Override
     public List<SubjectInfo> queryPage(SubjectInfo subjectInfo, Long categoryId, Long labelId, int start, Integer pageSize) {
-        return Collections.emptyList();
+        return this.subjectInfoDao.queryPage(subjectInfo, categoryId, labelId, start, pageSize);
     }
 }

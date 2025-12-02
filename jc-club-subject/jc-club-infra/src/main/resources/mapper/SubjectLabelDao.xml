@@ -130,7 +130,7 @@ id, label_name, sort_num, category_id, created_by, created_time, update_by, upda
     <select id="batchQueryById" resultMap="SubjectLabelMap">
         select id, label_name, sort_num, created_by, created_time, update_by, update_time, is_deleted
         from subject_label
-        where id = 
+        where id in
               <foreach collection="list" item="id" open="(" close=")" separator=",">
                   #{id}
               </foreach>

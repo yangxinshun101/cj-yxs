@@ -3,14 +3,17 @@ package com.yxs.auth.application.controller;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
+import com.alibaba.fastjson.JSON;
 import com.google.common.base.Preconditions;
-import com.yxs.auth.application.convert.AuthUserConvert;
+import com.yxs.auth.application.convert.AuthUserDTOConvert;
 import com.yxs.auth.application.entity.AuthUserDTO;
 import com.yxs.auth.common.entity.Result;
 import com.yxs.auth.domain.entity.AuthUserBO;
 import com.yxs.auth.domain.service.UserDomainService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +29,7 @@ public class UserController {
 
     @Resource
     private UserDomainService userDomainService;
+
 
     /**
      * 用户登录接口
@@ -59,7 +63,7 @@ public class UserController {
         try {
             Preconditions.checkNotNull(authUserDTO.getUserName(), "用户名openId不能为空");
 
-            AuthUserBO authUserBO = AuthUserConvert.INSTANCE.authUserDTOToBO(authUserDTO);
+            AuthUserBO authUserBO = AuthUserDTOConvert.INSTANCE.authUserDTOToBO(authUserDTO);
 
             return Result.ok(userDomainService.register(authUserBO));
         }catch (Exception e){
@@ -69,6 +73,24 @@ public class UserController {
 
     }
 
+    /**
+     * 获取用户信息
+     */
+    @RequestMapping("getUserInfo")
+    public Result<AuthUserDTO> getUserInfo(@RequestBody AuthUserDTO authUserDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("UserController.getUserInfo.dto:{}", JSON.toJSONString(authUserDTO));
+            }
+            Preconditions.checkArgument(!StringUtils.isBlank(authUserDTO.getUserName()), "用户名不能为空");
+            AuthUserBO authUserBO = AuthUserDTOConvert.INSTANCE.authUserDTOToBO(authUserDTO);
+            AuthUserBO userInfo = userDomainService.getUserInfo(authUserBO);
+            return Result.ok(AuthUserDTOConvert.INSTANCE.convertBOToDTO(userInfo));
+        } catch (Exception e) {
+            log.error("UserController.update.error:{}", e.getMessage(), e);
+            return Result.fail("更新用户信息失败");
+        }
+    }
 
 
 

@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.yxs.auth.common.enums.AuthUserStatusEnum;
 import com.yxs.auth.common.enums.IsDeletedFlagEnum;
 import com.yxs.auth.domain.constant.AuthConstant;
+import com.yxs.auth.domain.convert.AuthUserBOConvert;
 import com.yxs.auth.domain.entity.AuthUserBO;
 import com.yxs.auth.domain.service.UserDomainService;
 import com.yxs.auth.infra.basic.entity.*;
@@ -14,6 +15,7 @@ import com.yxs.auth.domain.redis.RedisUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.LinkedList;
@@ -121,5 +123,22 @@ public class UserDomainServiceImpl implements UserDomainService {
 
         return Objects.isNull( insert);
 
+    }
+
+    @Override
+    public AuthUserBO getUserInfo(AuthUserBO authUserBO) {
+        AuthUserBO authUser = new AuthUserBO();
+        authUser.setUserName(authUserBO.getUserName());
+
+        AuthUser authUser1 = AuthUserBOConvert.INSTANCE.authUserBOToEntity(authUserBO);
+        List<AuthUser> authUsers = authUserService.queryByCondition(authUser1);
+
+        if (CollectionUtils.isEmpty(authUsers)){
+            return new AuthUserBO();
+        }
+
+        AuthUser user = authUsers.get(0);
+
+        return AuthUserBOConvert.INSTANCE.convertEntityToBO(user);
     }
 }
