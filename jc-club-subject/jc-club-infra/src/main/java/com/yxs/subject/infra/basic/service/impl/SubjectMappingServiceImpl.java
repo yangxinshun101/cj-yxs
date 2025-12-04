@@ -83,4 +83,10 @@ public class SubjectMappingServiceImpl implements SubjectMappingService {
         return this.subjectMappingDao.queryLabelIdListByCategoryId(subjectMapping);
 
     }
+
+    @Override
+    public Integer queryCountByCondition(List<Long> LabelIdList) {
+
+        return this.subjectMappingDao.queryCountByCondition(LabelIdList);
+    }
 }

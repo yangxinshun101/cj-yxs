@@ -54,4 +54,6 @@ public interface SubjectMappingService {
     void batchInsert(List<SubjectMapping> mappingList);
 
     List<SubjectMapping> queryLabelId(SubjectMapping subjectMapping);
+
+    Integer queryCountByCondition(List<Long> LabelIdList);
 }

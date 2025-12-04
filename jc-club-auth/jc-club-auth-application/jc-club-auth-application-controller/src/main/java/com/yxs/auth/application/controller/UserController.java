@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 /**
- * 登录测试 
+ * 登录测试
  */
 @RestController
 @Slf4j
@@ -33,6 +33,7 @@ public class UserController {
 
     /**
      * 用户登录接口
+     *
      * @param validCode
      * @return
      */
@@ -44,7 +45,7 @@ public class UserController {
 
             //从根据验证码去查询OpenId
             return Result.ok(userDomainService.doLogin(validCode));
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("UserController.doLogin.error:{}", e.getMessage(), e);
             return Result.fail("登录失败");
         }
@@ -54,11 +55,12 @@ public class UserController {
 
     /**
      * 注册用户
+     *
      * @param authUserDTO
      * @return
      */
     @PostMapping("register")
-    public Result register(AuthUserDTO authUserDTO){
+    public Result register(AuthUserDTO authUserDTO) {
 
         try {
             Preconditions.checkNotNull(authUserDTO.getUserName(), "用户名openId不能为空");
@@ -66,7 +68,7 @@ public class UserController {
             AuthUserBO authUserBO = AuthUserDTOConvert.INSTANCE.authUserDTOToBO(authUserDTO);
 
             return Result.ok(userDomainService.register(authUserBO));
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("UserController.register.error:{}", e.getMessage(), e);
             return Result.fail("注册失败");
         }
@@ -93,24 +95,53 @@ public class UserController {
     }
 
 
+    /**
+     * @return
+     */
+    @PostMapping("/update")
+    public Result update(@RequestBody AuthUserDTO authUserDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("UserController.update.dto:{}", JSON.toJSONString(authUserDTO));
+            }
+            Preconditions.checkNotNull(authUserDTO.getUserName(), "用户openId不能为空");
+            AuthUserBO authUserBO = AuthUserDTOConvert.INSTANCE.authUserDTOToBO(authUserDTO);
+            int count = userDomainService.update(authUserBO);
+
+            return Result.ok(count > 0);
+
+        } catch (Exception e) {
+            log.error("UserController.update.error:{}", e.getMessage(), e);
+            return Result.fail("更新用户信息失败");
+        }
+
+    }
 
     // 查询登录状态  ---- http://localhost:8081/acc/isLogin
     @RequestMapping("isLogin")
     public SaResult isLogin() {
         return SaResult.ok("是否登录：" + StpUtil.isLogin());
     }
-    
+
     // 查询 Token 信息  ---- http://localhost:8081/acc/tokenInfo
     @RequestMapping("tokenInfo")
     public SaResult tokenInfo() {
         return SaResult.data(StpUtil.getTokenInfo());
     }
-    
-    // 测试注销  ---- http://localhost:8081/acc/logout
-    @RequestMapping("logout")
-    public SaResult logout() {
-        StpUtil.logout();
-        return SaResult.ok();
+
+    @RequestMapping("logOut")
+    public Result logout(AuthUserDTO authUserDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("UserController.logout.dto:{}", JSON.toJSONString(authUserDTO));
+            }
+            Preconditions.checkNotNull(authUserDTO.getUserName(), "用户openId不能为空");
+            StpUtil.logout(authUserDTO.getUserName());
+            return Result.ok();
+        } catch (Exception e) {
+            log.error("UserController.logout.error:{}", e.getMessage(), e);
+            return Result.fail("用户登出失败");
+        }
     }
 
 

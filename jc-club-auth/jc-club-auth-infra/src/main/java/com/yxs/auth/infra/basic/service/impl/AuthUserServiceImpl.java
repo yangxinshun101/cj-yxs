@@ -86,4 +86,9 @@ public class AuthUserServiceImpl implements AuthUserService {
 
         return authUserDao.queryByCondition(authUser);
     }
+
+    @Override
+    public int updateByUserName(AuthUser authUser) {
+        return authUserDao.update(authUser);
+    }
 }

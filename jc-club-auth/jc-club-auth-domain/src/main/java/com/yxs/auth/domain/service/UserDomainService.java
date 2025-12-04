@@ -9,4 +9,6 @@ public interface UserDomainService {
     Boolean register(AuthUserBO authUserBO);
 
     AuthUserBO getUserInfo(AuthUserBO authUserBO);
+
+    int update(AuthUserBO authUserBO);
 }

@@ -5,14 +5,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
-public class MinioService {
+public class FileService {
 
     private StorageAdapter storageAdapter;
 
 
-    MinioService(StorageAdapter storageAdapter){
+    FileService(StorageAdapter storageAdapter){
         this.storageAdapter = storageAdapter;
     }
 
@@ -34,9 +35,21 @@ public class MinioService {
      * 上传文件
      */
     public String uploadFile(MultipartFile uploadFile, String bucket, String objectName){
-        storageAdapter.uploadFile(uploadFile,bucket,objectName);
-        objectName = objectName + "/" + uploadFile.getOriginalFilename();
-        return storageAdapter.getFileUrl(bucket, objectName);
+
+        UUID uuid = UUID.randomUUID();
+        String name = objectName+"/"+uuid.toString()+ uploadFile.getOriginalFilename();
+        storageAdapter.uploadFile(uploadFile,bucket,name);
+        return storageAdapter.getFileUrl(bucket, name);
     }
 
+    /**
+     * 创建桶
+     */
+    public void createBucket(String bucket) {
+        storageAdapter.createBucket(bucket);
+    }
+
+    /**
+     * 列出当前桶下的所有文件
+     */
 }

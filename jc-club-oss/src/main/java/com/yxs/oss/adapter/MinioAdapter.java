@@ -2,6 +2,7 @@ package com.yxs.oss.adapter;
 
 import com.yxs.oss.entity.FileInfo;
 import com.yxs.oss.utils.MinioUtil;
+import lombok.SneakyThrows;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -9,7 +10,7 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 
-public class MinioAdapter implements StorageAdapter{
+public class MinioAdapter implements StorageAdapter {
 
     @Resource
     private MinioUtil minioUtil;
@@ -25,13 +26,18 @@ public class MinioAdapter implements StorageAdapter{
     }
 
     @Override
+    @SneakyThrows
     public void uploadFile(MultipartFile uploadFile, String bucket, String objectName) {
+        minioUtil.createBucket(bucket);
+
+        minioUtil.uploadFile(uploadFile.getInputStream(), bucket, objectName);
+
 
     }
 
     @Override
     public void createBucket(String bucket) {
-
+        minioUtil.createBucket(bucket);
     }
 
     @Override
@@ -51,6 +57,6 @@ public class MinioAdapter implements StorageAdapter{
 
     @Override
     public String getFileUrl(String bucket, String objectName) {
-        return "";
+        return minioUtil.getFileUrl(bucket, objectName);
     }
 }

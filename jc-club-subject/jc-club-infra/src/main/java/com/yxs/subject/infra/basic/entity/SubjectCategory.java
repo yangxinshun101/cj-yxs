@@ -64,5 +64,10 @@ public class SubjectCategory implements Serializable {
      */
     private Integer isDeleted;
 
+    /**
+     * 数量
+     */
+    private Integer count;
+
 }
 

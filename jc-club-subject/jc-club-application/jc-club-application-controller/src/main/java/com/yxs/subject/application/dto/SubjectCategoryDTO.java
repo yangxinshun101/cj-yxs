@@ -55,6 +55,10 @@ public class SubjectCategoryDTO implements Serializable {
      */
     private Integer isDeleted;
     /**
+     * 数量
+     */
+    private Integer count;
+    /**
      *
      */
     private List<SubjectLabelDTO> labelDTOList;

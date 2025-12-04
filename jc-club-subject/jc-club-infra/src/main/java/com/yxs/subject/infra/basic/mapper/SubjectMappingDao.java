@@ -75,5 +75,7 @@ public interface SubjectMappingDao {
      * @return
      */
     List<SubjectMapping> queryLabelIdListByCategoryId(SubjectMapping subjectMapping);
+
+    Integer queryCountByCondition(@Param("list") List<Long> LabelIdList);
 }
 

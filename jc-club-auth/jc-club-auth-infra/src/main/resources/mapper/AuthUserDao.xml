@@ -286,7 +286,7 @@ is_deleted = values(is_deleted)
                 is_deleted = #{isDeleted},
             </if>
         </set>
-        where id = #{id}
+        where user_name = #{userName}
     </update>
 
     <!--通过主键删除-->

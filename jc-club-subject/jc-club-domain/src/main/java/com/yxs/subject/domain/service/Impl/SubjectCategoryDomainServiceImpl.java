@@ -69,6 +69,15 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
 
         //拿到infra层数据类型后调用，infra层查询方法进行查询
         List<SubjectCategory> subjectCategoryList = subjectCategoryService.queryCategoryParentList(subjectCategory);
+        for (SubjectCategory category : subjectCategoryList) {
+            SubjectLabel subjectLabel = new SubjectLabel();
+            subjectLabel.setCategoryId(category.getId());
+            List<SubjectLabel> subjectLabelList = subjectLabelService.queryListByCategoryId(subjectLabel);
+            List<Long> LabelIdList = subjectLabelList.stream().map(SubjectLabel::getId).collect(Collectors.toList());
+            Integer count = subjectMappingService.queryCountByCondition(LabelIdList);
+            category.setCount(count);
+            log.info("SubjectCategoryDomainServiceImpl queryCategoryList category: {}", JSON.toJSONString(category));
+        }
 
         //拿到infra层的数据，进行转换为BO数据返回
         List<SubjectCategoryBO> subjectCategoryBOList = SubjectCategoryBOConvert.INSTANCE.

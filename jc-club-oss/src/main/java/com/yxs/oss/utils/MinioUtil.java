@@ -36,7 +36,7 @@ public class MinioUtil {
      * 上次文件
      */
     @SneakyThrows
-    public void uploadFile(String bucket, String objectName, InputStream inputStream) {
+    public void uploadFile(InputStream inputStream, String bucket, String objectName) {
         minioClient.putObject(PutObjectArgs.builder().bucket(bucket).object(objectName).
                 stream(inputStream, -1, 5242889L).build());
     }

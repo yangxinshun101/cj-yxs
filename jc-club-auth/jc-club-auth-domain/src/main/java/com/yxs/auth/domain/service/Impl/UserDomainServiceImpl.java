@@ -141,4 +141,10 @@ public class UserDomainServiceImpl implements UserDomainService {
 
         return AuthUserBOConvert.INSTANCE.convertEntityToBO(user);
     }
+
+    @Override
+    public int update(AuthUserBO authUserBO) {
+        AuthUser authUser = AuthUserBOConvert.INSTANCE.authUserBOToEntity(authUserBO);
+        return authUserService.updateByUserName(authUser);
+    }
 }
