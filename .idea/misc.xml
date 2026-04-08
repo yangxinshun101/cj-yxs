@@ -13,15 +13,32 @@
         <option value="$PROJECT_DIR$/jc-club-subject1/pom.xml" />
         <option value="$PROJECT_DIR$/jc-club-subject-1/pom.xml" />
         <option value="$PROJECT_DIR$/jc-club-wx/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-practice/pom.xml" />
+        <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-auth/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-oss/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-subject/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-wx/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/../jc-club-source/jc-club/jc-club-oss/pom.xml" />
+        <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/jc-club-auth-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/jc-club-auth-application/jc-club-auth-application-controller/pom.xml" />
+        <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/jc-club-auth-application/jc-club-auth-application-job/pom.xml" />
+        <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/jc-club-auth-application/jc-club-auth-application-mq/pom.xml" />
+        <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/jc-club-auth-application/pom.xml" />
+        <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/jc-club-auth-common/pom.xml" />
+        <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/jc-club-auth-domain/pom.xml" />
+        <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/jc-club-auth-infra/pom.xml" />
+        <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/jc-club-auth-starter/pom.xml" />
+        <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/pom.xml" />
       </set>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_22" project-jdk-name="corretto-1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" project-jdk-name="corretto-1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
