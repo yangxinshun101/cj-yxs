@@ -45,12 +45,12 @@
             <name>aliyun maven</name>
             <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
             <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
         </repository>
     </repositories>
 

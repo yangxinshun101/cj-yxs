@@ -38,7 +38,7 @@ public class MybatisPlusAllSqlLog implements InnerInterceptor {
     private static void logInfo(BoundSql boundSql, MappedStatement ms, Object parameter) {
         try {
             log.info("parameter = " + parameter);
-            // 获取到节点的id,即sql语句的id
+            // 获取到节点的id,即sql语句的 id:com.yxs.subject.infra.basic.mapper.SubjectCategoryDao.queryCategoryParentList
             String sqlId = ms.getId();
             log.info("sqlId = " + sqlId);
             // 获取节点的配置
@@ -58,7 +58,7 @@ public class MybatisPlusAllSqlLog implements InnerInterceptor {
 
     // 进行？的替换
     public static String showSql(Configuration configuration, BoundSql boundSql) {
-        // 获取参数
+        // 获取参数ParameterMapping{property='categoryId', mode=IN, javaType=class java.lang.Long, jdbcType=null, numericScale=null, resultMapId='null', jdbcTypeName='null', expression='null'}
         Object parameterObject = boundSql.getParameterObject();
         List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
         // sql语句中多个空格都用一个空格代替

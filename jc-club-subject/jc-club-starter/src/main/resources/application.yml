@@ -26,3 +26,16 @@ spring:
           enabled: true
 logging:
   config: classpath:log4j2-spring.xml
+
+xxl:
+  job:
+    admin:
+      addresses: http://127.0.0.1:8080/xxl-job-admin
+    accessToken: default_token
+    executor:
+      appname: jc-club-subject
+      address:
+      ip:
+      port: 20010
+      logpath: /data/applogs/xxl-job/jobhandler
+      logretentiondays: 30

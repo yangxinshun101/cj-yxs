@@ -6,6 +6,7 @@ import com.yxs.subject.domain.convert.SubjectCategoryBOConvert;
 import com.yxs.subject.domain.entity.SubjectCategoryBO;
 import com.yxs.subject.domain.entity.SubjectLabelBO;
 import com.yxs.subject.domain.service.SubjectCategoryDomainService;
+import com.yxs.subject.domain.util.CacheUtil;
 import com.yxs.subject.infra.basic.entity.SubjectCategory;
 import com.yxs.subject.infra.basic.entity.SubjectMapping;
 import com.yxs.subject.infra.basic.entity.SubjectLabel;
@@ -34,6 +35,12 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
 
     @Resource
     private SubjectLabelService subjectLabelService;
+    @Resource
+    private CacheUtil cacheUtil;
+
+
+    private static final String SUBJECT_CATEGORY_LABEL = "subject_category_label";
+
     @Override
     public void add(SubjectCategoryBO subjectCategoryBO) {
         //打印日志，记录传入参数信息
@@ -122,8 +129,17 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
     @Override
     public List<SubjectCategoryBO> queryCategoryAndLabel(SubjectCategoryBO subjectCategoryBO) {
         //查询当前大类下所有分类
+        Long id = subjectCategoryBO.getId();
+        String key = SUBJECT_CATEGORY_LABEL + id;
+        List<SubjectCategoryBO> result = cacheUtil.getResult(key, SubjectCategoryBO.class, k -> {
+            return getSubjectCategoryBOS(id);
+        });
+        return result;
+    }
+
+    private List<SubjectCategoryBO> getSubjectCategoryBOS(Long id) {
         SubjectCategory subjectCategory = new SubjectCategory();
-        subjectCategory.setParentId(subjectCategoryBO.getId());
+        subjectCategory.setParentId(id);
         subjectCategory.setIsDeleted(IsDeletedFlagEnum.NOT_DELETED.getCode());
         List<SubjectCategory> subjectCategoryList = subjectCategoryService.queryCategoryParentList(subjectCategory);
         if (log.isInfoEnabled()) {
@@ -137,7 +153,7 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
             subjectMapping.setCategoryId(category.getId());
             List<SubjectMapping> mappingList = subjectMappingService.queryLabelId(subjectMapping);
 
-            if (log.isInfoEnabled()){
+            if (log.isInfoEnabled()) {
                 log.info("SubjectCategoryController.queryCategoryAndLabel.mappingList:{}",
                         JSON.toJSONString(mappingList));
             }
