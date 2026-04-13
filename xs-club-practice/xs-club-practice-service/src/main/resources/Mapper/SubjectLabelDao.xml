@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yxs.practice.service.dao.SubjectLabelDao">
+
+    <resultMap type="com.yxs.practice.service.entity.po.SubjectLabelPO" id="SubjectLabelPO">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="labelName" column="label_name" jdbcType="VARCHAR"/>
+        <result property="categoryId" column="category_id" jdbcType="INTEGER"/>
+        <result property="sortNum" column="sort_num" jdbcType="INTEGER"/>
+        <result property="createdBy" column="created_by" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SubjectLabelPO">
+        select
+        id, sort_num, category_id, label_name, created_by, created_time, update_by, update_time, is_deleted
+        from subject_mapping
+        where id = #{id}
+    </select>
+
+
+</mapper>
+

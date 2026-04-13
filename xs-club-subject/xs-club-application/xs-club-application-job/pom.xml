@@ -5,18 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.yxs</groupId>
-        <artifactId>xs-club-subject</artifactId>
+        <artifactId>xs-club-application</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>xs-club-application</artifactId>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>xs-club-application-controller</module>
-        <module>xs-club-application-job</module>
-        <module>xs-club-application-mq</module>
-    </modules>
+    <artifactId>xs-club-application-job</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

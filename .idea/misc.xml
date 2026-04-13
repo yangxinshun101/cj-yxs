@@ -35,6 +35,7 @@
         <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/jc-club-auth-infra/pom.xml" />
         <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/jc-club-auth-starter/pom.xml" />
         <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-subject/pom.xml" />
       </set>
     </option>
   </component>

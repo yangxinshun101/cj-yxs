@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yxs.practice.service.dao.SubjectCategoryDao">
+
+    <select id="getPrimaryCategory" resultType="com.yxs.practice.service.entity.po.PrimaryCategoryPO">
+        select sc.parent_id as parentId
+        from subject_category sc,
+        subject_info si,
+        subject_mapping sm
+        where sc.id =sm.category_id
+        and sm.id = si.subject_id
+        and sc.is_delete = 0
+        and si.is_delete = 0
+        and sm.is_delete = 0
+        and si.subject_type in
+        <foreach item="item" collection="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by sc.parent_id
+    </select>
+
+    <select id="getCategoryById" resultType="com.yxs.practice.service.entity.po.CategoryPO">
+        select category_name as categoryName, category_type as categoryType, parent_id as parentId
+        from subject_category
+        where is_delete = 0
+            and id = #{parentId}
+    </select>
+
+    <select id="selectCategoryByPrimaryCategory" resultType="com.yxs.practice.service.entity.po.CategoryPO">
+        select id, category_name, category_type, parent_id
+        from subject_category
+        where  parent_id = #{parentId}
+            and category_type = #{categoryType}
+            and is_delete = 0
+    </select>
+
+</mapper>

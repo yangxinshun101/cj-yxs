@@ -10,23 +10,23 @@
         <module name="xs-club-auth-common" />
         <module name="xs-club-practice-service" />
         <module name="xs-club-api" />
-        <module name="jc-club-application-controller" />
         <module name="xs-club-infra" />
         <module name="xs-club-practice-api" />
         <module name="xs-club-auth-application-mq" />
+        <module name="xs-club-application-controller" />
         <module name="xs-club-auth-infra" />
         <module name="xs-club-auth-domain" />
         <module name="xs-club-oss" />
         <module name="xs-club-auth-api" />
-        <module name="jc-club-application-mq" />
+        <module name="xs-club-application-job" />
         <module name="xs-club-auth-starter" />
-        <module name="jc-club-application-job" />
         <module name="xs-club-wx" />
         <module name="xs-club-domain" />
         <module name="xs-club-auth-application-job" />
         <module name="xs-club-common" />
         <module name="xs-club-gateway" />
         <module name="xs-club-starter" />
+        <module name="xs-club-application-mq" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
