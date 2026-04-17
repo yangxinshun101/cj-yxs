@@ -40,6 +40,12 @@
     <file url="file://$PROJECT_DIR$/xs-club-subject/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/xs-club-subject/xs-club-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/xs-club-subject/xs-club-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xs-club-subject/xs-club-application/jc-club-application-controller/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xs-club-subject/xs-club-application/jc-club-application-controller/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xs-club-subject/xs-club-application/jc-club-application-job/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xs-club-subject/xs-club-application/jc-club-application-job/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xs-club-subject/xs-club-application/jc-club-application-mq/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xs-club-subject/xs-club-application/jc-club-application-mq/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/xs-club-subject/xs-club-application/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/xs-club-subject/xs-club-application/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/xs-club-subject/xs-club-application/xs-club-application-controller/src/main/java" charset="UTF-8" />

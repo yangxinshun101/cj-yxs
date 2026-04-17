@@ -25,9 +25,9 @@ public class LoginContextHolder {
         threadLocalMap.put(key,value);
     }
 
-    public static Object getLoginId(){
+    public static String getLoginId(){
         Map<String, Object> threadLocalMap = getThreadLocalMap();
-        return threadLocalMap.get("loginId");
+        return (String) threadLocalMap.get("loginId");
     }
 
     public static void remove(){

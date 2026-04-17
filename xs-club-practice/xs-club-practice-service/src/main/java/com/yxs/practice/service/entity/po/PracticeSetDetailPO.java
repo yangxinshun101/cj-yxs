@@ -2,10 +2,11 @@ package com.yxs.practice.service.entity.po;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class PracticeSetPO {
+public class PracticeSetDetailPO implements Serializable {
 
     /**
      * 主键
@@ -13,29 +14,19 @@ public class PracticeSetPO {
     private Long id;
 
     /**
-     * 套题名称
+     * 套题id
      */
-    private String setName;
+    private Long setId;
 
     /**
-     * 1实时生成 2预设套题
+     * 题目id
      */
-    private Integer setType;
+    private Long subjectId;
 
     /**
-     * 套题热度
+     * 题目类型
      */
-    private Integer setHeat;
-
-    /**
-     * 套题描述
-     */
-    private String setDesc;
-
-    /**
-     * 大类id
-     */
-    private Long primaryCategoryId;
+    private Integer subjectType;
 
     /**
      * 创建人
@@ -55,4 +46,5 @@ public class PracticeSetPO {
      * 更新时间
      */
     private Date updateTime;
+
 }
