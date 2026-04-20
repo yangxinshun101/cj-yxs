@@ -5,15 +5,16 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.base.Preconditions;
 import com.yxs.practice.api.common.Result;
 import com.yxs.practice.api.req.GetPracticeSubjectListReq;
+import com.yxs.practice.api.req.GetPracticeSubjectReq;
+import com.yxs.practice.api.req.GetPracticeSubjectsReq;
 import com.yxs.practice.api.vo.PracticeSetVO;
+import com.yxs.practice.api.vo.PracticeSubjectListVO;
+import com.yxs.practice.api.vo.PracticeSubjectVO;
 import com.yxs.practice.api.vo.SpecialPracticeVO;
 import com.yxs.practice.service.entity.dto.PracticeSubjectDTO;
 import com.yxs.practice.service.service.PracticeSetService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -78,5 +79,62 @@ public class PracticeSetController {
             return Result.fail("开始练习失败");
         }
 
+    }
+
+
+    /**
+     * 获取练习题
+     * 根据练习Id查询详细的题目信息
+     */
+    @PostMapping(value = "/getSubjects")
+    public Result<PracticeSubjectListVO> getSubjects(@RequestBody GetPracticeSubjectsReq req) {
+        if (log.isInfoEnabled()) {
+            log.info("获取练习题入参{}", JSON.toJSONString(req));
+        }
+        try {
+            Preconditions.checkArgument(!Objects.isNull(req), "参数不能为空！");
+            Preconditions.checkArgument(!Objects.isNull(req.getSetId()), "练习id不能为空！");
+            PracticeSubjectListVO list = practiceSetService.getSubjects(req);
+            if (log.isInfoEnabled()) {
+                log.info("获取练习题目列表出参{}", JSON.toJSONString(list));
+            }
+            return Result.ok(list);
+        } catch (IllegalArgumentException e) {
+            log.error("参数异常！错误原因{}", e.getMessage(), e);
+            return Result.fail(e.getMessage());
+        } catch (Exception e) {
+            log.error("获取练习题目列表异常！错误原因{}", e.getMessage(), e);
+            return Result.fail("获取练习题目列表异常！");
+        }
+    }
+
+
+    /**
+     * 获取题目详情
+     */
+    @PostMapping(value = "/getPracticeSubject")
+    public Result<PracticeSubjectVO> getPracticeSubject(@RequestBody GetPracticeSubjectReq req) {
+        if (log.isInfoEnabled()) {
+            log.info("获取练习题详情入参{}", JSON.toJSONString(req));
+        }
+        try {
+            Preconditions.checkArgument(!Objects.isNull(req), "参数不能为空！");
+            Preconditions.checkArgument(!Objects.isNull(req.getSubjectId()), "题目id不能为空！");
+            Preconditions.checkArgument(!Objects.isNull(req.getSubjectType()), "题目类型不能为空！");
+            PracticeSubjectDTO dto = new PracticeSubjectDTO();
+            dto.setSubjectId(req.getSubjectId());
+            dto.setSubjectType(req.getSubjectType());
+            PracticeSubjectVO vo = practiceSetService.getPracticeSubject(dto);
+            if (log.isInfoEnabled()) {
+                log.info("获取练习题目详情出参{}", JSON.toJSONString(vo));
+            }
+            return Result.ok(vo);
+        } catch (IllegalArgumentException e) {
+            log.error("参数异常！错误原因{}", e.getMessage(), e);
+            return Result.fail(e.getMessage());
+        } catch (Exception e) {
+            log.error("获取练习详情异常！错误原因{}", e.getMessage(), e);
+            return Result.fail("获取练习题目详情异常！");
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.yxs.practice.service.service.impl;
 
 import com.yxs.practice.api.enums.IsDeletedFlagEnum;
 import com.yxs.practice.api.enums.SubjectInfoTypeEnum;
+import com.yxs.practice.api.req.GetPracticeSubjectsReq;
 import com.yxs.practice.api.vo.*;
 import com.yxs.practice.service.dao.*;
 import com.yxs.practice.service.entity.dto.CategoryDTO;
@@ -122,8 +123,10 @@ public class PracticeSetServiceImpl implements PracticeSetService {
     @Override
     public PracticeSetVO addPractice(PracticeSubjectDTO practiceSubjectDTO) {
         PracticeSetVO practiceSetVO = new PracticeSetVO();
+        //第一步：查出配置好的题目内容。
         List<PracticeSubjectDetailVO> practiceList = getPracticeList(practiceSubjectDTO);
 
+        //第二步：记录练习表面到set表
         PracticeSetPO practiceSetPO = new PracticeSetPO();
         practiceSetPO.setSetType(1);
         List<String> assembleIds = practiceSubjectDTO.getAssembleIds();
@@ -159,6 +162,7 @@ public class PracticeSetServiceImpl implements PracticeSetService {
         practiceSetDao.add(practiceSetPO);
         Long practiceSetId = practiceSetPO.getId();
 
+        //第三步：记录详细题目编号到set_detail表
         practiceList.forEach(e -> {
             PracticeSetDetailPO detailPO = new PracticeSetDetailPO();
             detailPO.setSetId(practiceSetId);
@@ -223,4 +227,39 @@ public class PracticeSetServiceImpl implements PracticeSetService {
             list.add(vo);
         });
     }
+
+    @Override
+    public PracticeSubjectListVO getSubjects(GetPracticeSubjectsReq req) {
+        Long setId = req.getSetId();
+        PracticeSubjectListVO practiceSubjectListVO = new PracticeSubjectListVO();
+
+        //根据练题Id查询当前练习题的所有题目Id；
+        List<PracticeSetDetailPO> practiceSetDetailPOS = practiceSetDetailDao.selectBySetId(setId);
+        if (CollectionUtils.isEmpty(practiceSetDetailPOS)) {
+            return practiceSubjectListVO;
+        }
+
+        //根据查询出的所以题目Id
+        List<PracticeSubjectDetailVO> practiceSubjectDetailVOList = new ArrayList<>();
+        practiceSetDetailPOS.forEach(e -> {
+            PracticeSubjectDetailVO practiceSubjectDetailVO = new PracticeSubjectDetailVO();
+            practiceSubjectDetailVO.setSubjectId(e.getSubjectId());
+            practiceSubjectDetailVO.setSubjectType(e.getSubjectType());
+            practiceSubjectDetailVOList.add(practiceSubjectDetailVO);
+        });
+
+        practiceSubjectListVO.setSubjectList(practiceSubjectDetailVOList);
+        PracticeSetPO practiceSetPO = practiceSetDao.selectById(setId);
+        practiceSubjectListVO.setTitle(practiceSetPO.getSetName());
+
+        return practiceSubjectListVO;
+    }
+
+    @Override
+    public PracticeSubjectVO getPracticeSubject(PracticeSubjectDTO dto) {
+
+        return null;
+    }
+
+
 }

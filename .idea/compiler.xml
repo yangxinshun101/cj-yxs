@@ -13,10 +13,12 @@
         <module name="xs-club-infra" />
         <module name="xs-club-practice-api" />
         <module name="xs-club-auth-application-mq" />
+        <module name="xs-club-application-controller" />
         <module name="xs-club-auth-infra" />
         <module name="xs-club-auth-domain" />
         <module name="xs-club-oss" />
         <module name="xs-club-auth-api" />
+        <module name="xs-club-application-job" />
         <module name="xs-club-auth-starter" />
         <module name="xs-club-wx" />
         <module name="xs-club-domain" />
@@ -24,23 +26,6 @@
         <module name="xs-club-common" />
         <module name="xs-club-gateway" />
         <module name="xs-club-starter" />
-      </profile>
-      <profile name="Annotation profile for xs-club-subject" enabled="true">
-        <sourceOutputDir name="../jc-club-application-controller/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../jc-club-application-controller/target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="xs-club-application-controller" />
-      </profile>
-      <profile name="Annotation profile for xs-club-application-job" enabled="true">
-        <sourceOutputDir name="../jc-club-application-job/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../jc-club-application-job/target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="xs-club-application-job" />
-      </profile>
-      <profile name="Annotation profile for xs-club-application-mq" enabled="true">
-        <sourceOutputDir name="../jc-club-application-mq/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../jc-club-application-mq/target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
         <module name="xs-club-application-mq" />
       </profile>
     </annotationProcessing>
@@ -73,7 +58,6 @@
       <module name="jc-club-oss" target="1.8" />
       <module name="jc-club-oss (1) (com.jingdianjichi)" target="1.8" />
       <module name="jc-club-oss (2) (com.jingdianjichi)" target="1.8" />
-      <module name="xs-club-subject" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
