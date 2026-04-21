@@ -8,6 +8,8 @@ import com.yxs.practice.service.dao.*;
 import com.yxs.practice.service.entity.dto.CategoryDTO;
 import com.yxs.practice.service.entity.dto.PracticeSubjectDTO;
 import com.yxs.practice.service.entity.po.*;
+import com.yxs.practice.service.handler.PracticeHandler;
+import com.yxs.practice.service.handler.PracticeHandlerFactory;
 import com.yxs.practice.service.service.PracticeSetService;
 import com.yxs.practice.service.util.LoginUtil;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,9 @@ public class PracticeSetServiceImpl implements PracticeSetService {
 
     @Resource
     private PracticeSetDetailDao practiceSetDetailDao;
+
+    @Resource
+    private PracticeHandlerFactory practiceHandlerFactory;
 
 
     @Override
@@ -255,10 +260,17 @@ public class PracticeSetServiceImpl implements PracticeSetService {
         return practiceSubjectListVO;
     }
 
+    //这是真正根据题目ID查询题目详情
     @Override
     public PracticeSubjectVO getPracticeSubject(PracticeSubjectDTO dto) {
+        PracticeSubjectVO practiceSubjectVO = new PracticeSubjectVO();
+        SubjectPO subjectPO = subjectDao.selectById(dto.getSubjectId());
+        practiceSubjectVO.setSubjectName(subjectPO.getSubjectName());
+        practiceSubjectVO.setSubjectType(dto.getSubjectType());
+        PracticeHandler handler = practiceHandlerFactory.getHandler(dto.getSubjectType());
+        practiceSubjectVO = handler.add(practiceSubjectVO, subjectPO);
 
-        return null;
+        return practiceSubjectVO;
     }
 
 
