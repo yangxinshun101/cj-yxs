@@ -1,63 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <option name="USE_RELEASE_OPTION" value="false" />
     <annotationProcessing>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="xs-club-auth-application-controller" />
-        <module name="xs-club-auth-common" />
-        <module name="xs-club-practice-service" />
         <module name="xs-club-api" />
         <module name="xs-club-infra" />
-        <module name="xs-club-practice-api" />
-        <module name="xs-club-auth-application-mq" />
         <module name="xs-club-application-controller" />
-        <module name="xs-club-auth-infra" />
-        <module name="xs-club-auth-domain" />
         <module name="xs-club-oss" />
-        <module name="xs-club-auth-api" />
         <module name="xs-club-application-job" />
-        <module name="xs-club-auth-starter" />
         <module name="xs-club-wx" />
         <module name="xs-club-domain" />
-        <module name="xs-club-auth-application-job" />
         <module name="xs-club-common" />
         <module name="xs-club-gateway" />
         <module name="xs-club-starter" />
         <module name="xs-club-application-mq" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="jc-club-application-controller (1)" target="1.8" />
-      <module name="jc-club-application-job (1)" target="1.8" />
-      <module name="jc-club-application-mq (1)" target="1.8" />
+    <bytecodeTargetLevel target="8">
       <module name="jc-club-auth" target="1.8" />
       <module name="jc-club-auth-api" target="1.8" />
-      <module name="jc-club-auth-api (1)" target="1.8" />
       <module name="jc-club-auth-application" target="1.8" />
-      <module name="jc-club-auth-application (1)" target="1.8" />
       <module name="jc-club-auth-application-controller" target="1.8" />
-      <module name="jc-club-auth-application-controller (1)" target="1.8" />
-      <module name="jc-club-auth-application-controller (2)" target="21" />
       <module name="jc-club-auth-application-job" target="1.8" />
-      <module name="jc-club-auth-application-job (1)" target="1.8" />
-      <module name="jc-club-auth-application-job (2)" target="21" />
       <module name="jc-club-auth-application-mq" target="1.8" />
-      <module name="jc-club-auth-application-mq (1)" target="1.8" />
-      <module name="jc-club-auth-application-mq (2)" target="21" />
       <module name="jc-club-auth-common" target="1.8" />
-      <module name="jc-club-auth-common (1)" target="1.8" />
       <module name="jc-club-auth-domain" target="1.8" />
-      <module name="jc-club-auth-domain (1)" target="1.8" />
       <module name="jc-club-auth-infra" target="1.8" />
-      <module name="jc-club-auth-infra (1)" target="1.8" />
       <module name="jc-club-auth-starter" target="1.8" />
-      <module name="jc-club-auth-starter (1)" target="1.8" />
       <module name="jc-club-oss" target="1.8" />
-      <module name="jc-club-oss (1) (com.jingdianjichi)" target="1.8" />
-      <module name="jc-club-oss (2) (com.jingdianjichi)" target="1.8" />
+      <module name="xs-club-auth-api" target="1.8" />
+      <module name="xs-club-auth-application" target="1.8" />
+      <module name="xs-club-auth-application-controller" target="1.8" />
+      <module name="xs-club-auth-application-job" target="1.8" />
+      <module name="xs-club-auth-application-mq" target="1.8" />
+      <module name="xs-club-auth-common" target="1.8" />
+      <module name="xs-club-auth-domain" target="1.8" />
+      <module name="xs-club-auth-infra" target="1.8" />
+      <module name="xs-club-auth-starter" target="1.8" />
+      <module name="xs-club-practice-api" target="1.8" />
+      <module name="xs-club-practice-service" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

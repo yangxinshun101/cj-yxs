@@ -11,6 +11,8 @@ import com.yxs.subject.domain.entity.SubjectInfoBO;
 import com.yxs.subject.domain.service.SubjectInfoDomainService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Param;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +33,9 @@ public class SubjectController {
 
     @Resource
     private SubjectInfoDomainService subjectInfoDomainService;
+
+    @Resource
+    private RocketMQTemplate rocketTemplate;
 
 
     /**
@@ -107,6 +112,15 @@ public class SubjectController {
     }
 
 
+    /**
+     * 测试MQ发送
+     */
+    @PostMapping("/testMqSend")
+    public Result testMqSend(@Param("id") int id) {
 
+        rocketTemplate.convertAndSend("test-topic", "发送MQ信息"+id );
+
+        return Result.success(true);
+        }
 
 }

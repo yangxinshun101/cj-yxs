@@ -20,6 +20,16 @@
         <option value="$PROJECT_DIR$/xs-club-oss/pom.xml" />
         <option value="$PROJECT_DIR$/xs-club-subject/pom.xml" />
         <option value="$PROJECT_DIR$/xs-club-wx/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-auth/xs-club-auth-api/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-subject/xs-club-api/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-subject/xs-club-application/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-subject/xs-club-common/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-subject/xs-club-domain/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-subject/xs-club-infra/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-subject/xs-club-starter/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-subject/xs-club-application/xs-club-application-controller/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-subject/xs-club-application/xs-club-application-job/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-subject/xs-club-application/xs-club-application-mq/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -35,10 +45,21 @@
         <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/jc-club-auth-infra/pom.xml" />
         <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/jc-club-auth-starter/pom.xml" />
         <option value="$PROJECT_DIR$/../jc-club/jc-club-auth/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-auth/xs-club-auth-api/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-auth/xs-club-auth-application/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-auth/xs-club-auth-application/xs-club-auth-application-controller/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-auth/xs-club-auth-application/xs-club-auth-application-job/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-auth/xs-club-auth-application/xs-club-auth-application-mq/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-auth/xs-club-auth-common/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-auth/xs-club-auth-domain/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-auth/xs-club-auth-infra/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-auth/xs-club-auth-starter/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-practice/xs-club-practice-api/pom.xml" />
+        <option value="$PROJECT_DIR$/xs-club-practice/xs-club-practice-service/pom.xml" />
       </set>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" project-jdk-name="corretto-1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="corretto-1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

@@ -8,6 +8,7 @@ import com.yxs.subject.common.enums.SubjectLikedStatusEnum;
 import com.yxs.subject.common.util.LoginUtil;
 import com.yxs.subject.domain.convert.SubjectLikedBOConverter;
 import com.yxs.subject.domain.entity.SubjectLikedBO;
+import com.yxs.subject.domain.entity.SubjectLikedMessage;
 import com.yxs.subject.domain.redis.RedisUtils;
 import com.yxs.subject.domain.service.SubjectLikedDomainService;
 import com.yxs.subject.infra.basic.entity.SubjectInfo;
@@ -15,6 +16,7 @@ import com.yxs.subject.infra.basic.entity.SubjectLiked;
 import com.yxs.subject.infra.basic.service.SubjectInfoService;
 import com.yxs.subject.infra.basic.service.SubjectLikedService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -39,6 +41,9 @@ public class SubjectLikedDomainServiceImpl implements SubjectLikedDomainService 
     private SubjectInfoService subjectInfoService;
 
     @Resource
+    private RocketMQTemplate rocketMQTemplate;
+
+    @Resource
     private RedisUtils redisUtil;
 
 private static final String SUBJECT_LABELED_KEY= "subject.liked";
@@ -52,7 +57,12 @@ private static final String SUBJECT_LABELED_DETAIL_KEY= "subject.liked.detail";
         Integer status = subjectLikedBO.getStatus();
         String likedKey = buildSubjectLikedKey(subjectId.toString(), likedUserId);
         //这里不做单个用户重复对某一题目点赞的落库处理，交给数据库中统一使用主键冲突时修改的方式去处理
-        redisUtil.putHash(SUBJECT_LABELED_KEY,likedKey, status);
+//        redisUtil.putHash(SUBJECT_LABELED_KEY,likedKey, status);
+        SubjectLikedMessage subjectLikedMessage = new SubjectLikedMessage();
+        subjectLikedMessage.setSubjectId(subjectId);
+        subjectLikedMessage.setLikeUserId(likedUserId);
+        subjectLikedMessage.setStatus(status);
+        rocketMQTemplate.convertAndSend("subject-liked-topic", subjectLikedMessage);
 
         String likedCountKey = SUBJECT_LABELED_COUNT_KEY + subjectId;
         String likedDetailKey = SUBJECT_LABELED_DETAIL_KEY + subjectId + likedUserId;
@@ -135,6 +145,16 @@ private static final String SUBJECT_LABELED_DETAIL_KEY= "subject.liked.detail";
 
     @Override
     public void syncLikedByMsg(SubjectLikedBO subjectLikedBO) {
+
+        ArrayList<SubjectLiked> subjectLikeds = new ArrayList<>();
+        SubjectLiked subjectLiked = new SubjectLiked();
+        subjectLiked.setStatus(subjectLikedBO.getStatus());
+        subjectLiked.setSubjectId(subjectLikedBO.getSubjectId());
+        subjectLiked.setLikeUserId(subjectLikedBO.getLikeUserId());
+        subjectLikeds.add(subjectLiked);
+
+        subjectLikedService.batchInsert(subjectLikeds);
+
 
     }
 
